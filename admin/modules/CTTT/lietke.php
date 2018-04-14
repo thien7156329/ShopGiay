@@ -1,0 +1,84 @@
+<?php
+	error_reporting(E_ALL & ~E_NOTICE  &~E_WARNING);
+	if(isset($_GET['trang'])){
+		$trang = $_GET['trang'];
+	}
+	else{
+		$trang = '';
+	}
+	if($trang == '' || $trang == 1){
+		$qua_trang = 0;
+	}else{
+		$qua_trang = ($trang * 4) - 4;
+	}
+	$sql = "select * from tintuc,loaitt where loaitt.ID_TT = tintuc.ID_TT order by tintuc.ID_TT desc limit $qua_trang,4";
+	$run = mysqli_query($Dbconnect,$sql);
+?>
+<table width="859px" height="444px"  border="1" class="info-table" >
+  <tr>
+    <th height="78" width="5%"><div align="center">Mã TT</div></td>
+    <th width="15%"><div align="center">Tiêu Đề</div></td>
+    <th width="22%"><div align="center">Nội Dung</div></td>
+  
+    <th width="10%"><div align="center">Hình</div></td>
+    <th width="5%"><div align="center">Loại TT</div></td>
+   	<th width="10%"><div align="center">Giới Thiệu</div></td>
+    <th colspan="2" width="80px;"><div align="center">Quản Lý</div></td>
+  </tr>
+ <?php
+  	$i=0;
+  	while($dong = mysqli_fetch_array($run)){
+		?>
+  <tr>
+  	<td height="50"><div align="center"><?php echo $i;?></div></td>
+    <td><div align="center"><?php echo $dong['TieuDe']; ?></div> </td>
+    <td><div align="center"><textarea name="textarea" cols="32" rows="4"><?php echo $dong['NoiDung']; ?></textarea></div></td>
+  
+    <td><div align="center"><img src="modules/CTTT/uploads/<?php echo $dong['HinhAnh']; ?>" width="59" height="58" /></div></td>
+    <td><div align="center"><?php echo $dong['ID_TT']; ?></div></td>
+    <td><div align="center"><textarea name="textarea" cols="10" rows="4" style="width:140px;height:78px;"><?php echo $dong['GioiThieu']; ?></textarea></div></td>
+    <td><div align="center"><a href="index.php?quanly=CTTT&ac=sua&id=<?php echo $dong['ID_tintuc']; ?>">Sửa</a></div></td>
+    <td><div align="center"><a href="modules/CTTT/xuly.php?id=<?php echo $dong['ID_tintuc']; ?>">Xóa</a></div></td>
+  </tr>
+<?php
+	$i++;
+	}
+?>
+ </table>
+ <div style="margin-left:340px; margin-top:15px;">
+ <div id="container">
+    
+ 
+ <a href="#" class="page">Trang</a>
+<?php
+	$sql_trang = mysqli_query($Dbconnect,"select * from tintuc");
+	$count = mysqli_num_rows($sql_trang);
+	$a = ceil($count /4);
+
+	for($b=1;$b<=$a;$b++){
+		
+				
+		if($_GET['ac'] == 'them'){
+			if($trang==$b){
+		echo '<a href="index.php?quanly=CTTT&ac=them&trang='.$b.'" style="text-decoration:none;color:blue;" class="page">'.$b.' ' .'</a>';
+        
+	}else{
+		echo '<a href="index.php?quanly=CTTT&ac=them&trang='.$b.'" style="text-decoration:none;color:#000;" class="page">'.$b.' ' .'</a>';
+	}}
+	
+	elseif($_GET['ac'] == 'sua'){
+		if($trang==$b){
+				echo '<a href="index.php?quanly=CTTT&ac=sua&trang='.$b.'" style="text-decoration:none;color:red;" class="page">'.$b.' ' .'</a>';
+        
+	}else{
+		echo '<a href="index.php?quanly=CTTT&ac=sua&trang='.$b.'" style="text-decoration:none;color:#000;" class="page">'.$b.' ' .'</a>';
+	}
+	}
+	
+
+	}
+?>
+</div>
+</div>
+</div>
+

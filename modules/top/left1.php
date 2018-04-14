@@ -1,0 +1,197 @@
+<style>
+.news-content .news-item {
+  border-bottom: 1px dotted #979797;
+  margin-bottom: 15px;
+}
+.news-content .news-item:last-child {
+  border-bottom: none;
+}
+.news-content .news-block {
+  margin-top: 15px;
+}
+.news-content .news-block .image {
+  border: 1px solid #e3e3e3;
+  float: left;
+  height: 145px;
+  min-height: 130px;
+  overflow: hidden;
+  padding: 2px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.news-content .news-block .image a {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+.news-content .news-block .image a img {
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+  transform: scale(1);
+}
+.news-content .news-block .image a img:hover {
+  transform: scale(1.2);
+}
+.news-content .news-info h2.name {
+  margin-top: -7px;
+  margin-bottom: 5px;
+}
+.news-content .news-info h2.name a {
+  font-size: 15px;
+  color: #262626;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.box-news .news-content .news-block .news-item .news-info h2.name a:hover {
+  color: #5c9e55;
+}
+.news-content .news-info .date {
+  font-style: italic;
+  margin-bottom: 10px;
+  color: #646464;
+  font-size: 11px;
+}
+.news-content .news-info .desc {
+  color: #404040;
+  line-height: 25px;
+}
+h2{
+	font-size:20px;
+}
+.box_news{
+    margin-bottom: 21px !important;
+    margin-left: -10px !important;
+    margin-top: -371px !important;
+    width: 232px !important;	
+}
+.box-news h3 {
+  border-style:none;
+  border-color:none;
+  border-bottom: 2px solid linear-gradient(#333,rgb(104, 119, 126));;
+  text-transform: uppercase;
+  margin-top: 0;
+  padding-bottom:0;
+  padding-left:0;
+}
+.box-news h3 span {
+  text-align:center;
+  width: 232px;
+  background: linear-gradient(#333,rgb(104, 119, 126)); none repeat scroll 0 0;
+  color: #fff;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 40px;
+  padding: 0 40px 0 10px;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.box-news .news-content {
+  padding: 10px;
+  border: 1px solid #e3e3e3;
+}
+.box-news .news-content .news-block {
+      margin-top: 15px;
+}
+.box-news .news-content .news-block .image {
+  border: medium none;
+  height: 60px;
+  min-height: 50px;
+  padding: 0;
+}
+.box-news .news-content .news-block .news-item .news-info h2.name a {
+    font-size: 12px;
+      color: #2b90e8;
+}
+.box-news .news-content .news-info h2.name a {
+  font-size: 12px;
+  color: #2b90e8;
+  font-weight: bold;
+}
+</style>
+<?php
+    error_reporting(E_ALL & ~E_NOTICE  &~E_WARNING); 
+	$sql_loaisp = "select * from loaisp";
+	$run_loaisp = mysqli_query($Dbconnect,$sql_loaisp);
+?>
+
+<div class="left" > 
+    	 <div class="list">
+                    <h3 class="title">
+                        <span>Danh mục sản phẩm</span>
+                    </h3>
+                    <div class="content-list">
+                        <ul class="nav-list">
+                            <li>
+							 <?php
+                            while($dong_loaisp=mysqli_fetch_array($run_loaisp)){
+                            ?>
+                                <li><a href="index.php?xem=loaisp&id=<?php echo $dong_loaisp['ID'] ?>"><?php echo $dong_loaisp['tenloaisp'] ?></a></li>
+                            
+                       		</li>
+                           <?php
+                            }
+                            ?> 
+                         </ul>
+                          
+                             <!-- 
+                               <ul class="nav-list">
+                                <li>
+                                    <li><a href="index.php?xem=sanpham1 	">Sản Phẩm</a></li>
+                                </li>
+                        	 </ul>
+                             -->
+                         
+                    </div>          
+      	 </div>
+
+
+<div class="col-md-3">
+
+<div class="box-news" style="width:232px;margin-top: 24px;
+    
+    margin-left: -10px;
+    
+    position: relative;;" >
+    <h3>
+        <span>
+            Tin tức nổi bật
+        </span>
+    </h3>
+    <div class="news-content">
+        <div class=" news-block clearfix">
+          <?php
+			$sql="select * from tintuc  limit 4";
+			$tam=mysqli_query($Dbconnect,$sql);
+
+		?>  
+
+		<?php
+			 $sql_loaisp="select * from loaitt ";
+			 $tam_loaisp=mysqli_query($Dbconnect,$sql_loaisp);
+			$dong_loaisp = mysqli_fetch_array($tam_loaisp);
+		?>   
+        <?php
+			while($dong = mysqli_fetch_array($tam)){
+		?>      
+                    <div class="news-item clearfix">
+                    <div class="col-md-4 col-sm-4 col-xs-4 image"><a href="/tin-tuc/cac-ban-trai-can-chuan-bi-gi-cho-chuyen-phuot-sap-toi.html"><img src="admin/modules/CTTT/uploads/<?php echo $dong['HinhAnh'] ?>" class="img-responsive" alt="hình"></a></div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 news-info ">
+                        <h2 class="name"><a href="index.php?xem=chitiettt&id=<?php echo $dong['ID_tintuc'] ?>" ><?php echo $dong['TieuDe'] ?></a></h2>
+                        
+                    </div>
+                </div>
+             <?php
+			}
+				?>
+        </div>
+    </div>
+</div>
+                    </div>
+
+         
+</div>
+
+        
